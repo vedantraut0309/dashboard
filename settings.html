@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings | AURA</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="./style.css" rel="stylesheet">
+    <style>
+        /* Specific toggle styles tailored for the HTML structure used below */
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            display: inline-block;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            /* slate-300 */
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .dark .slider {
+            background-color: #334155;
+            /* slate-700 */
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        input:checked+.slider {
+            background-color: #2dd4bf;
+            /* primary */
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Modal Blur */
+        .modal-active {
+            display: flex !important;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-primary selection:text-obsidian">
+
+    <!-- Modal Overlay -->
+    <div id="confirmationModal"
+        class="hidden fixed inset-0 z-50 items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
+        <div
+            class="bg-white dark:bg-obsidian border border-slate-200 dark:border-white/10 rounded-2xl p-8 max-w-sm w-full shadow-2xl transform scale-100 transition-transform">
+            <div
+                class="w-12 h-12 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center mb-4 mx-auto">
+                <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-center text-slate-900 dark:text-white mb-2">Are you sure?</h3>
+            <p class="text-center text-slate-500 dark:text-slate-400 mb-6 text-sm">This action cannot be undone. All
+                your local settings will be reset.</p>
+            <div class="flex space-x-3">
+                <button onclick="closeModal()"
+                    class="flex-1 px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-200 dark:hover:bg-white/10 transition-colors">Cancel</button>
+                <button onclick="confirmReset()"
+                    class="flex-1 px-4 py-2 rounded-xl bg-red-500 text-white font-medium hover:bg-red-600 shadow-[0_0_15px_rgba(239,68,68,0.4)] transition-all">Yes,
+                    Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="app"
+        class="flex h-screen overflow-hidden bg-slate-50 dark:bg-obsidian text-slate-900 dark:text-slate-300 transition-colors duration-300">
+
+        <!-- Sidebar -->
+        <nav
+            class="w-20 lg:w-64 border-r border-slate-200 dark:border-white/5 bg-white/50 dark:bg-obsidian-light/50 backdrop-blur-xl flex flex-col justify-between transition-all duration-300 z-20">
+            <div>
+                <div
+                    class="h-20 flex items-center justify-center lg:justify-start lg:px-6 border-b border-slate-200 dark:border-white/5">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-primary to-blue-500 shadow-[0_0_15px_rgba(45,212,191,0.5)] flex items-center justify-center text-obsidian font-bold cursor-pointer"
+                        onclick="window.location.href='index.html'">A</div>
+                    <span
+                        class="ml-3 font-mono font-bold text-slate-800 dark:text-white hidden lg:block tracking-widest cursor-pointer"
+                        onclick="window.location.href='index.html'">AURA</span>
+                </div>
+                <ul class="flex flex-col py-6 space-y-2 px-2">
+                    <li><a href="index.html"
+                            class="flex items-center px-3 py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors group text-slate-500 dark:text-slate-400"><i
+                                data-lucide="layout-dashboard"
+                                class="w-5 h-5 group-hover:text-primary transition-colors"></i><span
+                                class="ml-3 hidden lg:block font-medium">Overview</span></a></li>
+                    <li><a href="wallet.html"
+                            class="flex items-center px-3 py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors group text-slate-500 dark:text-slate-400"><i
+                                data-lucide="wallet"
+                                class="w-5 h-5 group-hover:text-primary transition-colors"></i><span
+                                class="ml-3 hidden lg:block font-medium">Wallet</span></a></li>
+                    <li><a href="analytics.html"
+                            class="flex items-center px-3 py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors group text-slate-500 dark:text-slate-400"><i
+                                data-lucide="bar-chart-2"
+                                class="w-5 h-5 group-hover:text-primary transition-colors"></i><span
+                                class="ml-3 hidden lg:block font-medium">Analytics</span></a></li>
+                    <li><a href="trade.html"
+                            class="flex items-center px-3 py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors group text-slate-500 dark:text-slate-400"><i
+                                data-lucide="zap" class="w-5 h-5 group-hover:text-primary transition-colors"></i><span
+                                class="ml-3 hidden lg:block font-medium">Trade</span></a></li>
+                </ul>
+            </div>
+            <div class="p-4 border-t border-slate-200 dark:border-white/5 space-y-2">
+                <a href="#"
+                    class="flex items-center px-3 py-3 rounded-xl bg-primary/10 text-primary border border-primary/20 shadow-[0_0_10px_rgba(45,212,191,0.1)] group"><i
+                        data-lucide="settings" class="w-5 h-5"></i><span
+                        class="ml-3 hidden lg:block font-medium">Settings</span></a>
+                <button id="logoutBtn Sidebar" onclick="logout()"
+                    class="w-full flex items-center px-3 py-3 rounded-xl hover:bg-red-500/10 hover:text-red-500 text-slate-500 dark:text-slate-400 transition-colors group">
+                    <i data-lucide="log-out" class="w-5 h-5"></i>
+                    <span class="ml-3 hidden lg:block font-medium">Logout</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-1 relative overflow-y-auto overflow-x-hidden p-6 lg:p-10 scroll-smooth">
+            <header class="mb-8">
+                <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Settings</h1>
+                <p class="text-slate-500 dark:text-slate-400 mt-1">Manage your account preferences and system
+                    configuration.</p>
+            </header>
+
+            <div class="max-w-4xl space-y-8 pb-10">
+
+                <!-- Account Section -->
+                <section id="account" class="glass-panel p-8 rounded-2xl relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-bl-full -mr-8 -mt-8 pointer-events-none blur-2xl">
+                    </div>
+                    <h2 class="text-xl font-medium text-slate-900 dark:text-white mb-6 flex items-center"><i
+                            data-lucide="user" class="w-5 h-5 mr-3 text-primary"></i> Account</h2>
+
+                    <div class="flex flex-col md:flex-row items-center gap-8 mb-8">
+                        <div class="relative group">
+                            <div
+                                class="w-24 h-24 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center overflow-hidden border-2 border-slate-200 dark:border-white/20">
+                                <img id="profilePreview"
+                                    src="https://ui-avatars.com/api/?name=John+Doe&background=2dd4bf&color=fff"
+                                    alt="Profile" class="w-full h-full object-cover">
+                            </div>
+                            <label for="profileUpload"
+                                class="absolute bottom-0 right-0 p-2 rounded-full bg-primary text-obsidian shadow-lg cursor-pointer hover:scale-110 transition-transform">
+                                <i data-lucide="camera" class="w-4 h-4"></i>
+                            </label>
+                            <input type="file" id="profileUpload" class="hidden" accept="image/*">
+                        </div>
+                        <div class="flex-1 w-full space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-slate-600 dark:text-slate-400">Full
+                                        Name</label>
+                                    <input type="text" id="fullName" value="John Doe"
+                                        class="w-full bg-slate-50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white focus:border-primary/50 focus:outline-none transition-colors">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-slate-600 dark:text-slate-400">Email
+                                        Address</label>
+                                    <input type="email" id="email" value="john@aura.finance"
+                                        class="w-full bg-slate-50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white focus:border-primary/50 focus:outline-none transition-colors">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Appearance Section -->
+                <section id="appearance" class="glass-panel p-8 rounded-2xl">
+                    <h2 class="text-xl font-medium text-slate-900 dark:text-white mb-6 flex items-center"><i
+                            data-lucide="palette" class="w-5 h-5 mr-3 text-purple-500"></i> Appearance</h2>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-900 dark:text-white font-medium">Theme Mode</p>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Toggle between light and dark
+                                    aesthetics.</p>
+                            </div>
+                            <div
+                                class="bg-slate-100 dark:bg-white/5 p-1 rounded-xl flex border border-slate-200 dark:border-white/10">
+                                <button class="theme-btn px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                                    data-theme="light">Light</button>
+                                <button class="theme-btn px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                                    data-theme="dark">Dark</button>
+                                <button class="theme-btn px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                                    data-theme="system">Auto</button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-900 dark:text-white font-medium">Accent Color</p>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Customize the primary
+                                    interface color.</p>
+                            </div>
+                            <div class="flex gap-3">
+                                <button class="w-8 h-8 rounded-full bg-[#2dd4bf] hover:scale-110 transition-transform"
+                                    data-color="#2dd4bf"></button>
+                                <button class="w-8 h-8 rounded-full bg-blue-500 hover:scale-110 transition-transform"
+                                    data-color="#3b82f6"></button>
+                                <button class="w-8 h-8 rounded-full bg-purple-500 hover:scale-110 transition-transform"
+                                    data-color="#a855f7"></button>
+                                <button class="w-8 h-8 rounded-full bg-orange-500 hover:scale-110 transition-transform"
+                                    data-color="#f97316"></button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Security Section -->
+                <section id="security" class="glass-panel p-8 rounded-2xl">
+                    <h2 class="text-xl font-medium text-slate-900 dark:text-white mb-6 flex items-center"><i
+                            data-lucide="shield" class="w-5 h-5 mr-3 text-green-500"></i> Security</h2>
+
+                    <div class="space-y-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-slate-600 dark:text-slate-400">Change
+                                Password</label>
+                            <input type="password" id="newPassword" placeholder="New Password"
+                                class="w-full bg-slate-50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white focus:border-primary/50 focus:outline-none transition-colors">
+                            <!-- Strength Meter -->
+                            <div class="h-1 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden mt-2">
+                                <div id="strengthBar" class="h-full w-0 bg-red-500 transition-all duration-300"></div>
+                            </div>
+                            <p id="strengthText" class="text-xs text-slate-500 dark:text-slate-400 text-right">Enter
+                                password</p>
+                        </div>
+
+                        <div
+                            class="flex items-center justify-between py-4 border-t border-slate-200 dark:border-white/5">
+                            <div>
+                                <p class="text-slate-900 dark:text-white font-medium">Two-Factor Authentication</p>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Add an extra layer of
+                                    security.</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="2faToggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notifications Section -->
+                <section id="notifications" class="glass-panel p-8 rounded-2xl">
+                    <h2 class="text-xl font-medium text-slate-900 dark:text-white mb-6 flex items-center"><i
+                            data-lucide="bell" class="w-5 h-5 mr-3 text-yellow-500"></i> Notifications</h2>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-700 dark:text-slate-300">Email Alerts</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="emailNotif" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-700 dark:text-slate-300">Push Notifications</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="pushNotif" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-700 dark:text-slate-300">Sound Effects</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="soundNotif">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Preferences Section -->
+                <section id="preferences" class="glass-panel p-8 rounded-2xl">
+                    <h2 class="text-xl font-medium text-slate-900 dark:text-white mb-6 flex items-center"><i
+                            data-lucide="sliders" class="w-5 h-5 mr-3 text-blue-500"></i> Preferences</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-slate-600 dark:text-slate-400">Language</label>
+                            <select id="language"
+                                class="w-full bg-slate-50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white focus:border-primary/50 focus:outline-none transition-colors appearance-none">
+                                <option value="en">English (US)</option>
+                                <option value="es">Español</option>
+                                <option value="fr">Français</option>
+                                <option value="jp">日本語</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-slate-600 dark:text-slate-400">Currency</label>
+                            <select id="currency"
+                                class="w-full bg-slate-50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white focus:border-primary/50 focus:outline-none transition-colors appearance-none">
+                                <option value="usd">USD ($)</option>
+                                <option value="eur">EUR (€)</option>
+                                <option value="gbp">GBP (£)</option>
+                                <option value="jpy">JPY (¥)</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Data Section -->
+                <section id="data" class="glass-panel p-8 rounded-2xl border border-red-500/10">
+                    <h2 class="text-xl font-medium text-slate-900 dark:text-white mb-6 flex items-center"><i
+                            data-lucide="database" class="w-5 h-5 mr-3 text-red-500"></i> Data & Session</h2>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-900 dark:text-white font-medium">Clear Application Data</p>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Reset all settings and clear
+                                    local cache.</p>
+                            </div>
+                            <button onclick="openModal()"
+                                class="px-5 py-2.5 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500 hover:text-white transition-all font-medium">Reset</button>
+                        </div>
+
+                        <div class="border-t border-slate-200 dark:border-white/5 pt-6">
+                            <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-4">Account Actions</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <button onclick="window.location.href='login.html'"
+                                    class="flex items-center justify-center px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 font-medium transition-colors">
+                                    <i data-lucide="user-switch" class="w-4 h-4 mr-2"></i> Switch Account
+                                </button>
+                                <button onclick="window.location.href='signup.html'"
+                                    class="flex items-center justify-center px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 font-medium transition-colors">
+                                    <i data-lucide="user-plus" class="w-4 h-4 mr-2"></i> Create New
+                                </button>
+                                <button onclick="logout()"
+                                    class="flex items-center justify-center px-4 py-3 rounded-xl bg-red-500 hover:bg-red-600 shadow-lg text-white font-medium transition-all">
+                                    <i data-lucide="log-out" class="w-4 h-4 mr-2"></i> Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Inline logic for settings specific handling before main.js loads generally -->
+    <script>
+        // Modal Logic
+        function openModal() {
+            document.getElementById('confirmationModal').classList.remove('hidden');
+            document.getElementById('confirmationModal').classList.add('flex');
+        }
+        function closeModal() {
+            document.getElementById('confirmationModal').classList.add('hidden');
+            document.getElementById('confirmationModal').classList.remove('flex');
+        }
+        function confirmReset() {
+            localStorage.clear();
+            showToast('All settings reset to default', 'success'); // Relies on main.js showToast
+            closeModal();
+            setTimeout(() => window.location.reload(), 1000);
+        }
+
+
+    </script>
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>

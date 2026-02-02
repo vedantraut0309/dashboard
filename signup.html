@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up | AURA</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="./style.css" rel="stylesheet">
+</head>
+
+<body
+    class="bg-slate-50 dark:bg-obsidian min-h-screen flex items-center justify-center relative overflow-hidden selection:bg-primary selection:text-obsidian">
+
+    <!-- Background Gradients -->
+    <div
+        class="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/20 rounded-full blur-[120px] pointer-events-none">
+    </div>
+    <div
+        class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] pointer-events-none">
+    </div>
+
+    <main class="w-full max-w-md p-6 relative z-10">
+        <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-white/20 shadow-2xl backdrop-blur-xl">
+            <!-- Logo -->
+            <div class="flex flex-col items-center mb-8">
+                <h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-widest font-mono">Create Account
+                </h1>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">Join the next generation.</p>
+            </div>
+
+            <!-- Form -->
+            <form id="signupForm" class="space-y-5">
+                <div class="space-y-2">
+                    <label
+                        class="text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400 ml-1">Full
+                        Name</label>
+                    <div class="relative group">
+                        <i data-lucide="user"
+                            class="absolute left-4 top-3.5 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors"></i>
+                        <input type="text" required placeholder="John Doe"
+                            class="w-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl py-3 pl-12 pr-4 text-slate-900 dark:text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label
+                        class="text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400 ml-1">Email</label>
+                    <div class="relative group">
+                        <i data-lucide="mail"
+                            class="absolute left-4 top-3.5 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors"></i>
+                        <input type="email" required placeholder="name@example.com"
+                            class="w-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl py-3 pl-12 pr-4 text-slate-900 dark:text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label
+                        class="text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400 ml-1">Password</label>
+                    <div class="relative group">
+                        <i data-lucide="lock"
+                            class="absolute left-4 top-3.5 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors"></i>
+                        <input type="password" required placeholder="Create a password"
+                            class="w-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl py-3 pl-12 pr-4 text-slate-900 dark:text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all">
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3 py-2">
+                    <div class="relative flex items-center">
+                        <input type="checkbox" required
+                            class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-slate-500 dark:border-white/20 transition-all checked:border-primary checked:bg-primary">
+                        <i data-lucide="check"
+                            class="absolute left-1 top-1 w-3 h-3 text-obsidian opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
+                    </div>
+                    <span class="text-sm text-slate-500 dark:text-slate-400">I agree to the <a href="#"
+                            class="text-primary hover:underline">Terms of Service</a></span>
+                </div>
+
+                <button type="submit"
+                    class="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-emerald-400 text-obsidian font-bold text-lg shadow-[0_0_20px_rgba(45,212,191,0.3)] hover:shadow-[0_0_30px_rgba(45,212,191,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
+                    Create Account
+                </button>
+            </form>
+
+            <!-- Footer -->
+            <div class="mt-8 text-center">
+                <p class="text-slate-500 dark:text-slate-400 text-sm">Already a member? <a href="login.html"
+                        class="text-slate-900 dark:text-white font-medium hover:text-primary transition-colors">Sign
+                        In</a></p>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="/main.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
