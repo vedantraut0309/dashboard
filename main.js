@@ -1,5 +1,4 @@
-import './style.css'
-import Chart from 'chart.js/auto';
+
 
 
 // Theme Logic
