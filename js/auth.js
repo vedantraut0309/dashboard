@@ -2,15 +2,13 @@
 
 const checkAuth = () => {
     const token = localStorage.getItem('aura_auth_token');
-    const path = window.location.pathname;
+    const path = window.location.pathname.toLowerCase();
 
-    // Extract filename from path to handle GitHub Pages subdirectories
-    const filename = path.split('/').pop();
-
-    const isLoginPage = filename.includes('login.html');
-    const isSignupPage = filename.includes('signup.html');
+    // Check for both .html and extensionless paths (Vercel cleanUrls)
+    const isLoginPage = path.includes('login');
+    const isSignupPage = path.includes('signup');
     // Public landing page is index.html or empty string (root)
-    const isPublicPage = filename.includes('index.html') || filename === '';
+    const isPublicPage = path.endsWith('/') || path.includes('index');
 
     if (token) {
         // User is logged in
