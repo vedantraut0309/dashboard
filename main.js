@@ -11,6 +11,27 @@ const initTheme = () => {
 }
 initTheme();
 
+// Responsive Navigation Logic
+window.toggleMobileMenu = () => {
+    const sidebar = document.querySelector('nav');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar && overlay) {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.classList.toggle('overflow-hidden');
+    }
+}
+
+window.closeMobileMenu = () => {
+    const sidebar = document.querySelector('nav');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar && overlay) {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.classList.remove('overflow-hidden');
+    }
+}
+
 window.toggleTheme = () => {
     if (document.documentElement.classList.contains('dark')) {
         document.documentElement.classList.remove('dark');
