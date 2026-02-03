@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // Fallback if auth.js failed to load
                 localStorage.setItem('aura_auth_token', 'mock_token_' + Date.now());
-                window.location.href = 'dashboard.html';
+                window.location.href = 'dashboard';
             }
         });
     }
@@ -910,12 +910,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btn.textContent.includes('New Transfer')) {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                window.location.href = 'wallet.html';
+                window.location.href = 'wallet';
             });
         }
         if (btn.textContent.includes('View All') && btn.closest('.glass-panel')) {
             btn.addEventListener('click', () => {
-                window.location.href = 'wallet.html';
+                window.location.href = 'wallet';
             });
         }
     });

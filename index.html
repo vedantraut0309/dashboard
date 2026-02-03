@@ -21,10 +21,10 @@
       <span class="font-mono font-bold text-slate-800 dark:text-white tracking-widest text-lg">AURA</span>
     </div>
     <div class="flex items-center space-x-4">
-      <a href="login.html"
+      <a href="login"
         class="px-5 py-2 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 transition-all backdrop-blur-md">Log
         In</a>
-      <a href="signup.html"
+      <a href="signup"
         class="px-5 py-2 rounded-xl bg-primary text-obsidian font-bold hover:shadow-[0_0_20px_rgba(45,212,191,0.4)] transition-all">Sign
         Up</a>
     </div>
@@ -58,7 +58,7 @@
     </p>
 
     <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
-      <a href="login.html"
+      <a href="login"
         class="px-8 py-4 rounded-2xl bg-gradient-to-r from-primary to-blue-500 text-obsidian font-bold text-lg shadow-[0_0_30px_rgba(45,212,191,0.3)] hover:scale-105 transition-transform flex items-center">
         Get Started
         <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
@@ -101,14 +101,14 @@
     // Dynamic Button Logic
     const token = localStorage.getItem('aura_auth_token');
     if (token) {
-      const navBtn = document.querySelector('nav a[href="login.html"]');
+      const navBtn = document.querySelector('nav a[href="login"]');
       if (navBtn) {
         navBtn.textContent = 'Dashboard';
-        navBtn.href = 'dashboard.html';
+        navBtn.href = 'dashboard';
       }
-      const heroBtn = document.querySelector('main a[href="login.html"]');
+      const heroBtn = document.querySelector('main a[href="login"]');
       if (heroBtn) {
-        heroBtn.href = 'dashboard.html';
+        heroBtn.href = 'dashboard';
         heroBtn.innerHTML = 'Go to Dashboard <i data-lucide="layout-dashboard" class="ml-2 w-5 h-5"></i>';
       }
     }
