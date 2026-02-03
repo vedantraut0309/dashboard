@@ -24,28 +24,7 @@ window.toggleTheme = () => {
 // Initialize Icons
 lucide.createIcons();
 
-// --- Auth Logic ---
-const checkAuth = () => {
-    const path = window.location.pathname;
-    const isPublic = path.includes('login.html') || path.includes('signup.html');
-    const token = localStorage.getItem('aura_auth_token');
-
-    // If no token and trying to access protected page
-    if (!token && !isPublic) {
-        window.location.href = 'login.html';
-    }
-};
-
-window.logout = () => {
-    localStorage.removeItem('aura_auth_token');
-    showToast('Logged out successfully', 'success');
-    setTimeout(() => {
-        window.location.href = 'login.html';
-    }, 1000);
-};
-
-// Run Auth Check immediately
-checkAuth();
+// Auth Logic is handled by js/auth.js
 
 document.addEventListener('DOMContentLoaded', () => {
     // Login Form
@@ -53,10 +32,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            // Mock Login
-            localStorage.setItem('aura_auth_token', 'mock_token_' + Date.now());
-            showToast('Welcome back!', 'success');
-            setTimeout(() => window.location.href = 'index.html', 1000);
+            const emailInput = loginForm.querySelector('input[type="email"]');
+            const email = emailInput ? emailInput.value : 'user@example.com';
+
+            // Use centralized login
+            if (window.auth) {
+                window.auth.login(email, 'password');
+            } else {
+                // Fallback if auth.js failed to load
+                localStorage.setItem('aura_auth_token', 'mock_token_' + Date.now());
+                window.location.href = 'dashboard.html';
+            }
         });
     }
 
@@ -65,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (signupForm) {
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            // Mock Signup
-            localStorage.setItem('aura_auth_token', 'mock_token_' + Date.now());
-            showToast('Account created successfully!', 'success');
-            setTimeout(() => window.location.href = 'index.html', 1000);
+            // Mock Signup -> Login
+            if (window.auth) {
+                window.auth.login('newuser@example.com', 'password');
+            }
         });
     }
 });
