@@ -38,9 +38,13 @@ const logout = () => {
 // Check auth immediately upon load
 checkAuth();
 
-// Expose to window
+// Expose to window for both structured access and legacy onclick handlers
 window.auth = {
     checkAuth,
     login,
     logout
 };
+
+// Also expose directly for convenience in inline handlers
+window.login = login;
+window.logout = logout;

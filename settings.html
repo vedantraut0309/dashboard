@@ -137,7 +137,7 @@
                     class="flex items-center px-3 py-3 rounded-xl bg-primary/10 text-primary border border-primary/20 shadow-[0_0_10px_rgba(45,212,191,0.1)] group"><i
                         data-lucide="settings" class="w-5 h-5"></i><span
                         class="ml-3 hidden lg:block font-medium">Settings</span></a>
-                <button id="logoutBtn Sidebar" onclick="logout()"
+                <button id="logoutBtn Sidebar" onclick="window.auth.logout()" data-auth="logout"
                     class="w-full flex items-center px-3 py-3 rounded-xl hover:bg-red-500/10 hover:text-red-500 text-slate-500 dark:text-slate-400 transition-colors group">
                     <i data-lucide="log-out" class="w-5 h-5"></i>
                     <span class="ml-3 hidden lg:block font-medium">Logout</span>
@@ -359,7 +359,7 @@
                                     class="flex items-center justify-center px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 font-medium transition-colors">
                                     <i data-lucide="user-plus" class="w-4 h-4 mr-2"></i> Create New
                                 </button>
-                                <button onclick="logout()"
+                                <button onclick="window.auth.logout()" data-auth="logout"
                                     class="flex items-center justify-center px-4 py-3 rounded-xl bg-red-500 hover:bg-red-600 shadow-lg text-white font-medium transition-all">
                                     <i data-lucide="log-out" class="w-4 h-4 mr-2"></i> Logout
                                 </button>

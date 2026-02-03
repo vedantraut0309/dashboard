@@ -27,6 +27,21 @@ lucide.createIcons();
 // Auth Logic is handled by js/auth.js
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Global Logout Listener (resilient to dynamic content)
+    document.addEventListener('click', (e) => {
+        const logoutTrigger = e.target.closest('[data-auth="logout"]');
+        if (logoutTrigger) {
+            e.preventDefault();
+            if (window.auth) {
+                window.auth.logout();
+            } else {
+                // Emergency fallback
+                localStorage.removeItem('aura_auth_token');
+                window.location.href = 'login';
+            }
+        }
+    });
+
     // Login Form
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
@@ -35,9 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const emailInput = loginForm.querySelector('input[type="email"]');
             const email = emailInput ? emailInput.value : 'user@example.com';
 
-            // Use centralized login
+            // Use centralized login with fallback
             if (window.auth) {
                 window.auth.login(email, 'password');
+            } else if (window.login) {
+                window.login(email, 'password');
             } else {
                 // Fallback if auth.js failed to load
                 localStorage.setItem('aura_auth_token', 'mock_token_' + Date.now());
@@ -54,6 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Mock Signup -> Login
             if (window.auth) {
                 window.auth.login('newuser@example.com', 'password');
+            } else if (window.login) {
+                window.login('newuser@example.com', 'password');
+            } else {
+                localStorage.setItem('aura_auth_token', 'mock_token_' + Date.now());
+                window.location.href = 'dashboard';
             }
         });
     }
